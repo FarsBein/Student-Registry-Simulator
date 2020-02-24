@@ -29,35 +29,48 @@ public class Student
   // add a credit course to list of courses for this student
   public void addCourse(String courseName, String courseCode, String descr, String format,String sem, double grade)
   {
-	  // create a CreditCourse object
-	  // set course active
-	  // add to courses array list
+    String stringGrade = String.valueOf(grade); // use convertNumericGrade
+    // create a CreditCourse object
+    CreditCourse newObj = new CreditCourse(courseName,courseCode,descr,format,sem,stringGrade);
+    // set course active
+    newObj.setActive();
+    // add to courses array list
+    courses.add(newObj);
   }
-  
-  
-  
   // Prints a student transcript
   // Prints all completed (i.e. non active) courses for this student (course code, course name, 
   // semester, letter grade
   // see class CreditCourse for useful methods
   public void printTranscript()
   {
-	  
+	  for (int i=0; i < courses.size();i++){
+      if (courses.get(i).getActive() == false){
+        System.out.println(courses.get(i).displayGrade());
+      }
+    }
   }
   
   // Prints all active courses this student is enrolled in
   // see variable active in class CreditCourse
   public void printActiveCourses()
   {
-	 
+    for (int i=0; i < courses.size();i++){
+      if (courses.get(i).getActive() == true){
+        System.out.println(courses.get(i).displayGrade());
+      }
+    }
   }
   
   // Drop a course (given by courseCode)
-  // Find the credit course in courses arraylist above and remove it
+  // Find the credit course in courses arrayList above and remove it
   // only remove it if it is an active course
-  public void removeActiveCourse(String courseCode)
+  public void removeActiveCourse(String courseCode) 
   {
-	 
+    for (int i=0; i < courses.size();i++){ // test i am not sure <--------------
+      if (courses.get(i).getCode().equals(courseCode) && courses.get(i).getActive() == true){
+        courses.remove(i);
+      }
+    }
   }
   
   public String toString()
@@ -70,13 +83,11 @@ public class Student
   // and "other" student) then return true
   // otherwise return false
   // Hint: you will need to cast other parameter to a local Student reference variable
-  public boolean equals(Object other)
+  public boolean equals(Student other)
   {
     if (name.equals(other.getName()) && id.equals(other.getId())){
-      System.out.println("did pass");
       return true;
     }
 	  return false;
   }
-  
 }

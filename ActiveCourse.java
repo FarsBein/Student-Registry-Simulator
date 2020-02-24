@@ -2,22 +2,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-// Active University Course
+//  University Course
  
-public class ActiveCourse
-{
-	private ArrayList<Student> students; 
-	private String             semester;
-	
-	   
+public class ActiveCourse extends Course {
+   private ArrayList<Student> students;
+   private String semester;
+
    // Add a constructor method with appropriate parameters
    // should call super class constructor to initialize inherited variables
-   // make sure to *copy* students array list being passed in into new arraylist of students
-   // create Grade objects for each Student object and add to grades arraylist. Set grade to 0
-   // see class Registry to see how an ActiveCourse object is created and used
-   public ActiveCourse(String name, String code, String descr, String fmt,String semester,ArrayList<Student> students)
+   // make sure to *copy* students array list being passed in into new arraylist of
+   // students
+   // create Grade objects for each Student object and add to grades arraylist. Set
+   // grade to 0
+   // see class Registry to see how an Course object is created and used
+   public ActiveCourse(String name, String code, String descr, String fmt, String semester,
+         ArrayList<Student> students)
    {
-	   
+      super(name,code, descr, fmt);
+      this.semester = semester;
+      this.students = new ArrayList<Student>(students); // change to a copy not reference
    }
    
    public String getSemester()
@@ -29,7 +32,7 @@ public class ActiveCourse
    public void printClassList()
    {
 	   for (int i = 0; i < students.size(); i++){
-         System.out.println(student.get(i).toString());
+         System.out.println(students.get(i).toString()); // student --> students
       }
    }
    
@@ -37,16 +40,16 @@ public class ActiveCourse
    // 
    public void printGrades()
    {
-	   // for (int i = 0; i < students.size(); i++){
-      //    System.out.println(student.get(i).toString());
-      // }
+	   for (int i = 0; i < students.size(); i++){
+         System.out.println(students.get(i).toString() + " " + );
+      }
    }
    
    // Returns the numeric grade in this course for this student
    // If student not found in course, return 0 
    public double getGrade(String studentId)
    {
-	  // Search the student's list of credit courses to find the course code that matches this active course
+	  // Search the student's list of credit courses to find the course code that matches this  course
 	  // see class Student method getGrade() 
 	  // return the grade stored in the credit course object
 	  return 0; 

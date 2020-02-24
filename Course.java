@@ -55,29 +55,29 @@ public class Course
 		 if (score >= 90.0){
 			 return "A+";
 		 } else if (score >= 85.0){
-			 return "A"
+			 return "A";
 		 } else if (score >= 80.0){
-			 return "A-"
+			 return "A-";
 		 } else if (score >= 77.0){
-			 return "B+"
+			 return "B+";
 		 } else if (score >= 73.0){
-			 return "B"
+			 return "B";
 		 } else if (score >= 70.0){
-			 return "B-"
+			 return "B-";
 		 } else if (score >= 67.0){
-			 return "C+"
+			 return "C+";
 		 } else if (score >= 63.0){
-			 return "C"
+			 return "C";
 		 } else if (score >= 60.0){
-			 return "C-"
+			 return "C-";
 		 } else if (score >= 57.0){
-			 return "D+"
+			 return "D+";
 		 } else if (score >= 53.0){
-			 return "D"
+			 return "D";
 		 } else if (score >= 50.0){
-			 return "D-"
+			 return "D-";
 		 } else {
-			 return "F"
+			 return "F";
 		 }
 	 }
 	 

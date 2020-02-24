@@ -1,33 +1,38 @@
-public class CreditCourse  
+public class CreditCourse extends Course
 {
+	private boolean active;
+	private String semester, grade;
 	// add a constructor method with appropriate parameters
 	// should call the super class constructor
 	public CreditCourse(String name, String code, String descr, String fmt,String semester, String grade)
 	{
 		// add code
+		super(name,code,descr,fmt);
+		this.semester = semester;
+		this.grade = grade;
 	}
 	
 	public boolean getActive()
 	{
 		// add code and remove line below
-		return true;
+		return active;
 	}
 	
 	public void setActive()
 	{
-		// add code
+		active = true;
 	}
 	
 	public void setInactive()
 	{
-		// add code
+		active = false;
 	}
-	
+
 	public String displayGrade()
 	{
 		// Change line below and print out info about this course plus which semester and the grade achieved
 		// make use of inherited method in super class
-		return "";
+		return getDescription() + semester + grade;
 	}
 	
 }
