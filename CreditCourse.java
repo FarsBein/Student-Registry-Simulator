@@ -1,10 +1,11 @@
 public class CreditCourse extends Course
 {
 	private boolean active;
-	private String semester, grade;
+	private String semester;
+	private Double grade;
 	// add a constructor method with appropriate parameters
 	// should call the super class constructor
-	public CreditCourse(String name, String code, String descr, String fmt,String semester, String grade)
+	public CreditCourse(String name, String code, String descr, String fmt,String semester, Double grade)
 	{
 		// add code
 		super(name,code,descr,fmt);
@@ -12,6 +13,10 @@ public class CreditCourse extends Course
 		this.grade = grade;
 	}
 	
+	public Double getGrade(){ // new added
+		return grade;
+	}
+
 	public boolean getActive()
 	{
 		// add code and remove line below

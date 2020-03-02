@@ -6,7 +6,7 @@ public class Student
 {
   private String name;
   private String id;
-  public  ArrayList<CreditCourse> courses;
+  public  ArrayList<CreditCourse> courses; // weird 
   
   
   public Student(String name, String id)
@@ -26,12 +26,30 @@ public class Student
 	  return name;
   }
   
+  public Double getGrade(String code){ //new added
+    for(int i=0; i< courses.size(); i++){
+      if (code.equals(courses.get(i).getCode()))
+      {
+        return courses.get(i).getGrade();
+      }
+    }
+    return 0.0;
+  }
+
+  // public Double getDoubleGrade(String code){
+  //   for(int i=0; i< courses.size(); i++){
+  //     if (code.equals(courses.get(i).getCode()))
+  //     {
+  //       return courses.get(i).getGrade();
+  //     }
+  //   }
+  //   return 0.0;
+  // }
   // add a credit course to list of courses for this student
   public void addCourse(String courseName, String courseCode, String descr, String format,String sem, double grade)
   {
-    String stringGrade = String.valueOf(grade); // use convertNumericGrade
     // create a CreditCourse object
-    CreditCourse newObj = new CreditCourse(courseName,courseCode,descr,format,sem,stringGrade);
+    CreditCourse newObj = new CreditCourse(courseName,courseCode,descr,format,sem,grade);
     // set course active
     newObj.setActive();
     // add to courses array list
@@ -83,9 +101,9 @@ public class Student
   // and "other" student) then return true
   // otherwise return false
   // Hint: you will need to cast other parameter to a local Student reference variable
-  public boolean equals(Student other)
+  public boolean equals(Object other)
   {
-    if (name.equals(other.getName()) && id.equals(other.getId())){
+    if (name.equals(((Student) other).getName()) && id.equals(((Student) other).getId())) {
       return true;
     }
 	  return false;

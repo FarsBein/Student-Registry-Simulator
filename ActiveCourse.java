@@ -32,7 +32,7 @@ public class ActiveCourse extends Course {
    public void printClassList()
    {
 	   for (int i = 0; i < students.size(); i++){
-         System.out.println(students.get(i).toString()); // student --> students
+         System.out.println(students.get(i).toString());
       }
    }
    
@@ -41,7 +41,7 @@ public class ActiveCourse extends Course {
    public void printGrades()
    {
 	   for (int i = 0; i < students.size(); i++){
-         System.out.println(students.get(i).toString() + " " + );
+         System.out.println(students.get(i).toString() + " " + students.get(i).getGrade(super.getCode())); // not sure about students.get(i).getGrade(super.getCode()) 
       }
    }
    
@@ -52,7 +52,12 @@ public class ActiveCourse extends Course {
 	  // Search the student's list of credit courses to find the course code that matches this  course
 	  // see class Student method getGrade() 
 	  // return the grade stored in the credit course object
-	  return 0; 
+     for (int i = 0; i < students.size(); i++){
+      if (students.get(i).getId().equals(studentId)){
+         return students.get(i).getGrade(super.getCode());
+      }
+   }
+     return 0; 
    }
    
    // Returns a String containing the course information as well as the semester and the number of students 
@@ -60,7 +65,7 @@ public class ActiveCourse extends Course {
    // must override method in the superclass Course and use super class method getDescription()
    public String getDescription()
    {
-	   return "";
+	   return super.getDescription() + semester + " "+ students.size() +" Students";
    }
     
    
@@ -70,7 +75,7 @@ public class ActiveCourse extends Course {
    // Make use of a private Comparator class below
    public void sortByName()
    {
- 	  
+
    }
    
    // Fill in the class so that this class implement the Comparator interface
