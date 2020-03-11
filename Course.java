@@ -47,6 +47,10 @@ public class Course
 	   return code +" - " + name;
 	 }
 	 
+	 public String getDescr()
+	 {
+		return description;
+	 }
 	 // static method to convert numeric score to letter grade string 
 	 // e.g. 91 --> "A+"
 	 public static String convertNumericGrade(double score)

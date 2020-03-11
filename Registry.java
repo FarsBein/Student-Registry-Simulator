@@ -84,7 +84,13 @@ public class Registry
    // Remove student from registry 
    public boolean removeStudent(String studentId)
    {
-	   // Find student in students arraylist
+	   // Find student in students arrayList
+	   for (int i=0; i < students.size(); i++){
+		if (students.get(i).getId().equals(studentId)){
+			students.remove(students.get(i));
+			return true;
+		   }
+	   }
 	   // If found, remove this student and return true
 	   return false;
    }
@@ -94,7 +100,7 @@ public class Registry
    {
 	   for (int i = 0; i < students.size(); i++)
 	   {
-		   System.out.println("ID: " + students.get(i).getId() + " Name: " + students.get(i).getName() );   
+		   System.out.println("ID: " + students.get(i).getId() + " Name: " + students.get(i).getName());   
 	   }
 	   
    }
@@ -102,15 +108,28 @@ public class Registry
    // Given a studentId and a course code, add student to the active course
    public void addCourse(String studentId, String courseCode)
    {
-	   // Find student object in registry (i.e. students arraylist)
+	   // Find student object in registry (i.e. students arrayList)
 	   // Check if student has already taken this course in the past Hint: look at their credit course list
 	   // If not, then find the active course in courses array list using course code
 	   // If active course found then check to see if student already enrolled in this course
 	   // If not already enrolled
 	   //   add student to the active course
 	   //   add course to student list of credit courses with initial grade of 0
-	   
-	   
+	   int i = findStudentId(studentId);
+	   int j = findCourseCode(courseCode);
+	   boolean checkStudent = false; //true means student is already added
+	   if (i>=0 && j>=0){
+			ArrayList<Student> studentsFromCourses = courses.get(j).getStudents();
+			for (int x=0;x < studentsFromCourses.size(); x++){
+				if(!(studentsFromCourses.get(x).getId()).equalsIgnoreCase(studentId)){
+					courses.get(j).addStudent(students.get(i));
+					x=studentsFromCourses.size();
+				}
+			}
+			checkStudent = students.get(i).CourseTakenCheck(courseCode);
+			if (!checkStudent)
+				students.get(i).addCourse(courses.get(j).getName(),courses.get(j).getCode(),courses.get(j).getDescr(),courses.get(j).getFormat(),courses.get(j).getSemester(),0);
+	   }
    }
    
    // Given a studentId and a course code, drop student from the active course
@@ -121,53 +140,107 @@ public class Registry
 	   // If student found:
 	   //   remove the student from the active course
 	   //   remove the credit course from the student's list of credit courses
-	   
+	   int i = findStudentId(studentId);
+	   int j = findCourseCode(courseCode);
+	   boolean checkStudent = false; //true means student is already added
+	   if (i>=0 && j>=0){
+			ArrayList<Student> studentsFromCourses = courses.get(j).getStudents();
+			for (int x=0;x < studentsFromCourses.size(); x++){
+				if((studentsFromCourses.get(x).getId()).equals(studentId)){
+					courses.get(j).removeStudent(students.get(i));
+					x = studentsFromCourses.size();
+				}
+			}
+		}
+		checkStudent = students.get(i).CourseTakenCheck(courseCode);
+		if (checkStudent)
+			students.get(i).removeActiveCourse(courseCode);
+
    }
-   
+
+   //repeated code for finding courses by courseCode (0>= found and -1 not found)
+   private Integer findCourseCode(String courseCode){ 
+	for (int i =0; i < courses.size(); i++){
+		if((courses.get(i).getCode()).equalsIgnoreCase(courseCode)){
+			return i;
+		}
+	}
+	return -1;
+   }
+
+   //repeated code for finding students by id (0>= found and -1 not found)
+   private Integer findStudentId(String studentId){ //Added by Fars
+	for (int i =0; i < students.size(); i++){
+		if((students.get(i).getId()).equalsIgnoreCase(studentId)){
+			return i;
+		}
+	}
+	return -1;
+   }
+
    // Print all active courses
    public void printActiveCourses()
    {
 	   for (int i = 0; i < courses.size(); i++)
 	   {
 		   ActiveCourse ac = courses.get(i);
-		   System.out.println(ac.getDescription());
+		   System.out.println(ac.getDescription()+"\n");
 	   }
    }
    
    // Print the list of students in an active course
    public void printClassList(String courseCode)
    {
-	  
+	int i = findCourseCode(courseCode);
+	if(i >=0){
+		ArrayList<Student> courseStudents = courses.get(i).getStudents();
+		for (int x=0;x<courseStudents.size();x++){
+			System.out.println(courseStudents.get(x));
+		}
+	}
    }
    
    // Given a course code, find course and sort class list by student name
    public void sortCourseByName(String courseCode)
    {
-	   
+	int i = findCourseCode(courseCode);
+	if (i >= 0)
+		courses.get(i).sortByName();
    }
    
    // Given a course code, find course and sort class list by student name
    public void sortCourseById(String courseCode)
    {
-	   
+	int i = findCourseCode(courseCode);
+	if(i >= 0)
+		courses.get(i).sortById();
    }
    
    // Given a course code, find course and print student names and grades
    public void printGrades(String courseCode)
    {
-	   
+	int i = findCourseCode(courseCode);
+	ArrayList<Student> courseStudents = courses.get(i).getStudents();
+	for (int x=0;x<courseStudents.size();x++){
+		System.out.println(courseStudents.get(x) +" "+courseStudents.get(x).getGrade(courseCode));			
+	}
    }
    
    // Given a studentId, print all active courses of student
    public void printStudentCourses(String studentId)
    {
-	   
-   }
+	   int i = findStudentId(studentId);
+	   if (i >= 0){
+	   	students.get(i).printActiveCourses();
+	   }
+	}
    
    // Given a studentId, print all completed courses and grades of student
    public void printStudentTranscript(String studentId)
    {
-	   
+	int i = findStudentId(studentId);
+	if (i >= 0)
+		students.get(i).printTranscript();
    }
    
    // Given a course code, student id and numeric grade
@@ -179,7 +252,13 @@ public class Registry
 	   // if found, set the grade in grades arraylist for this course
 	   // then search student credit course list in student object and find course
 	   // set the grade in credit course and set credit course inactive
-	   
+	   int i = findCourseCode(courseCode);
+	   ArrayList<Student> courseStudents = courses.get(i).getStudents();
+	   for (int x=0; x < courseStudents.size(); x++){
+		if(courseStudents.get(x).getId().equals(studentId)){
+			courseStudents.get(x).setFinalGrade(courseCode, grade);
+		}
+	   }  
    }
   
 }

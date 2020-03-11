@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+
 //  University Course
  
 public class ActiveCourse extends Course {
@@ -53,11 +54,11 @@ public class ActiveCourse extends Course {
 	  // see class Student method getGrade() 
 	  // return the grade stored in the credit course object
      for (int i = 0; i < students.size(); i++){
-      if (students.get(i).getId().equals(studentId)){
+      if (students.get(i).getId().equalsIgnoreCase(studentId)){
          return students.get(i).getGrade(super.getCode());
       }
    }
-     return 0; 
+     return 0.0; 
    }
    
    // Returns a String containing the course information as well as the semester and the number of students 
@@ -65,37 +66,56 @@ public class ActiveCourse extends Course {
    // must override method in the superclass Course and use super class method getDescription()
    public String getDescription()
    {
-	   return super.getDescription() + semester + " "+ students.size() +" Students";
+	   return super.getDescription() + " " +semester + " Enrollment: " + students.size();
    }
     
-   
-   
-   
    // Sort the students in the course by name using the Collections.sort() method with appropriate arguments
    // Make use of a private Comparator class below
    public void sortByName()
    {
-
+      Collections.sort(students, new nameComparator());
    }
    
    // Fill in the class so that this class implement the Comparator interface
    // This class is used to compare two Student objects based on student name
-   private class NameComparator
+   private class nameComparator implements Comparator<Student>
    {
-   	
+      public int compare(Student a,Student b)
+      {
+         return a.getName().compareTo(b.getName());
+      }
    }
    
    // Sort the students in the course by student id using the Collections.sort() method with appropriate arguments
    // Make use of a private Comparator class below
    public void sortById()
    {
- 	  
+ 	  Collections.sort(students, new IdComparator());
    }
    
    // Fill in the class so that this class implement the Comparator interface
    // This class is used to compare two Student objects based on student id
-   private class IdComparator
+   private class IdComparator implements Comparator<Student>
    {
-   	
+   	public int compare(Student a, Student b){
+         int aID = Integer.parseInt(a.getId());
+         int bID = Integer.parseInt(b.getId());
+         if (aID > bID) return 1;
+         else if (aID < bID) return -1;
+         else return 0;
+      }
+   }
+
+   // return the list of students in this active course, used in registry
+   public ArrayList<Student> getStudents(){
+      return students;
+   }
+   // add a student, used in registry
+   public void addStudent(Student newStudent) {
+      students.add(newStudent);
+   }
+   // remove a student, used in registry
+   public void removeStudent(Student currStudent){
+      students.remove(currStudent);
    }
 }

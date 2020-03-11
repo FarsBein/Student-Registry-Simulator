@@ -26,9 +26,10 @@ public class Student
 	  return name;
   }
   
-  public Double getGrade(String code){ //new added
+  // given a courseCode it returns a student's grade from creditCourse
+  public Double getGrade(String courseCode){
     for(int i=0; i< courses.size(); i++){
-      if (code.equals(courses.get(i).getCode()))
+      if (courseCode.equalsIgnoreCase(courses.get(i).getCode()))
       {
         return courses.get(i).getGrade();
       }
@@ -36,16 +37,6 @@ public class Student
     return 0.0;
   }
 
-  // public Double getDoubleGrade(String code){
-  //   for(int i=0; i< courses.size(); i++){
-  //     if (code.equals(courses.get(i).getCode()))
-  //     {
-  //       return courses.get(i).getGrade();
-  //     }
-  //   }
-  //   return 0.0;
-  // }
-  // add a credit course to list of courses for this student
   public void addCourse(String courseName, String courseCode, String descr, String format,String sem, double grade)
   {
     // create a CreditCourse object
@@ -55,6 +46,7 @@ public class Student
     // add to courses array list
     courses.add(newObj);
   }
+
   // Prints a student transcript
   // Prints all completed (i.e. non active) courses for this student (course code, course name, 
   // semester, letter grade
@@ -107,5 +99,24 @@ public class Student
       return true;
     }
 	  return false;
+  }
+
+  // checks if a course is in courses list (true = taken and false = not taken)
+  public boolean CourseTakenCheck(String courseCode){
+    for (int i=0;i < courses.size();i++){
+      if ((courses.get(i).getCode()).equalsIgnoreCase(courseCode))
+        return true;
+    }
+    return false;
+  }
+  // sets a final grade for a specified course using creditCourse.setGrade()
+  // sets the course as inactive
+  public void setFinalGrade(String courseCode, double grade){
+    for (int i=0; i < courses.size();i++){
+      if (courses.get(i).getCode().equalsIgnoreCase(courseCode)){
+        courses.get(i).setGrade(grade);
+        courses.get(i).setInactive();
+      }
+    }
   }
 }

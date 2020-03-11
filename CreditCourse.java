@@ -12,14 +12,13 @@ public class CreditCourse extends Course
 		this.semester = semester;
 		this.grade = grade;
 	}
-	
-	public Double getGrade(){ // new added
+	// returns current course grade
+	public Double getGrade(){
 		return grade;
 	}
 
 	public boolean getActive()
 	{
-		// add code and remove line below
 		return active;
 	}
 	
@@ -33,11 +32,16 @@ public class CreditCourse extends Course
 		active = false;
 	}
 
+	// sets the final grade for this course
+	public void setGrade(double grade){
+		this.grade=grade;
+	}
+
 	public String displayGrade()
 	{
 		// Change line below and print out info about this course plus which semester and the grade achieved
 		// make use of inherited method in super class
-		return getDescription() + semester + grade;
+		return super.getDescription() + " " + semester + " "+ super.convertNumericGrade(grade);
 	}
 	
 }
