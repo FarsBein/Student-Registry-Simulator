@@ -37,7 +37,7 @@ public class StudentRegistrySimulator
 			  //  ensure id string is all numeric characters
 			  String studentName = commandLine.next();
 			  String studentId = commandLine.next();
-			  if (isStringOnlyAlphabet(studentName)&&isNumeric(studentId)){
+			  if (isStringOnlyAlphabet(studentName)&&isNumeric(studentId)&&!registry.StudentInRegistry(studentId)){
 				registry.addNewStudent(studentName, studentId);
 			  }
 		  }
@@ -160,6 +160,5 @@ public class StudentRegistrySimulator
 		}
 	  } 
 	  return true;
-  }
-  
+	}
 }

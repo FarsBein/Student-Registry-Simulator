@@ -261,4 +261,15 @@ public class Registry
 	   }  
    }
   
+   //checks if a student exist in the students arrayList
+   public boolean StudentInRegistry(String Id){
+	   for (int i=0; i < students.size();i++){
+		   if(students.get(i).getId().equals(Id)){
+			System.out.println("student's ID is already registered!");
+			return true;
+		   }
+	   }
+	   return false;
+   }
+
 }
